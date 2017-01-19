@@ -1,0 +1,2 @@
+google-api-python-client==1.6.1
+slacker==0.9.30
