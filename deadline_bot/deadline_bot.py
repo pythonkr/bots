@@ -12,4 +12,4 @@ for deadline in get_deadlines():
         message = '```{}``` 작업 마감일입니다'.format(deadline.work)
     else:
         message = '```{}``` 작업 마감이 {}일 지났습니다'.format(deadline.work, -deadline.remain_day)
-    slacker.chat.post_message('#bot_test', message, as_user=True)
+    slacker.chat.post_message('#random', message, as_user=True)
