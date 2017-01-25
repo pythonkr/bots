@@ -6,8 +6,9 @@ from oauth2client.file import Storage
 from typing import List
 from .deadline import Deadline
 
-SHEET_DATE_INDEX = 3
-SHEET_WORK_INDEX = 4
+SHEET_CHANNEL_INDEX = 1
+SHEET_DATE_INDEX = 4
+SHEET_WORK_INDEX = 5
 
 
 def get_credentials():
@@ -58,8 +59,9 @@ def get_deadlines() -> List[Deadline]:
 
             delta_date = deadline - today
             work = row[SHEET_WORK_INDEX]
+            channel = row[SHEET_CHANNEL_INDEX]
 
-            deadlines.append(Deadline(delta_date.days, work))
+            deadlines.append(Deadline(delta_date.days, work, channel))
         except:
             continue
 
