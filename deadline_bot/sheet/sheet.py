@@ -41,7 +41,7 @@ def get_deadlines() -> List[Deadline]:
                               discoveryServiceUrl=discovery_url)
 
     spreadsheet_id = '1YzFVjNcMPCdftj7yy1dbrlnECIm9yRtPMJbF5EO3AUA'
-    range_name = '해야할 일'
+    range_name = 'TODO'
     result = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
 
     rows = result.get('values', [])
