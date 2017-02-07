@@ -7,6 +7,7 @@ from typing import List
 from .deadline import Deadline
 
 SHEET_CHANNEL_INDEX = 1
+SHEET_WORKER_INDEX = 3
 SHEET_DATE_INDEX = 4
 SHEET_WORK_INDEX = 5
 
@@ -60,8 +61,9 @@ def get_deadlines() -> List[Deadline]:
             delta_date = deadline - today
             work = row[SHEET_WORK_INDEX]
             channel = row[SHEET_CHANNEL_INDEX]
+            worker = row[SHEET_WORKER_INDEX]
 
-            deadlines.append(Deadline(delta_date.days, work, channel))
+            deadlines.append(Deadline(delta_date.days, work, channel, worker))
         except:
             continue
 
