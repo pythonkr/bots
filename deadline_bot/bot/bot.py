@@ -6,8 +6,9 @@ from typing import List
 
 
 class Bot:
-    def __init__(self):
+    def __init__(self, debug=False):
         self.__slacker = Slacker(SLACK_BOT_TOKEN)
+        self.__debug = debug
 
     def post_message(self, deadlines: List[Deadline]):
         for deadline in deadlines:
@@ -31,6 +32,13 @@ class Bot:
 
     def __post_message(self, channel, message):
         try:
-            self.__slacker.chat.post_message('#' + channel, message, as_user=True, link_names=1)
+            full_channel = self.__get_full_channel(channel)
+            self.__slacker.chat.post_message('#' + full_channel, message, as_user=True, link_names=1)
         except Exception as e:
             logger.warn('error: {}, channel: {}, message: {}'.format(e, channel, message))
+
+    def __get_full_channel(self, channel):
+        if self.__debug is True:
+            return '#' + channel
+        else:
+            return '#bot_test'

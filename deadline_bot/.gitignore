@@ -1,4 +1,5 @@
 /.idea
+*.pyc
 config.py
 google_api_credential.json
-log.txt
+log.log
