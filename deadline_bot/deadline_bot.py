@@ -14,7 +14,7 @@ for deadline in get_deadlines():
             message = '```{}``` {} 님 작업 마감일입니다'.format(deadline.work, deadline.worker)
         else:
             message = '```{}``` {} 님 작업 마감이 {}일 지났습니다'.format(deadline.work, deadline.worker, -deadline.remain_day)
-        slacker.chat.post_message('#' + deadline.channel, message, as_user=True)
+        slacker.chat.post_message('#' + deadline.channel, message, as_user=True, link_names=1)
     except Exception as e:
         logger.warn('Error: {}'.format(e))
         logger.warn('Deadline: {}'.format(deadline))
