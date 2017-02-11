@@ -38,7 +38,7 @@ class Bot:
             logger.warn('error: {}, channel: {}, message: {}'.format(e, channel, message))
 
     def __get_full_channel(self, channel):
-        if self.__debug is True:
+        if self.__debug is False:
             return '#' + channel
         else:
             return '#bot_test'
