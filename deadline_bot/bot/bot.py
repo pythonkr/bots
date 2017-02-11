@@ -12,7 +12,7 @@ class Bot:
 
     def post_message(self, deadlines: List[Deadline]):
         for deadline in deadlines:
-            if deadline.remain_day > 0:
+            if 0 < deadline.remain_day <= 5:
                 message = '```{}``` {} 님 작업 마감이 {}일 남았습니다'.format(
                     deadline.work,
                     deadline.worker,
@@ -23,7 +23,7 @@ class Bot:
                     deadline.work,
                     deadline.worker)
                 self.__post_message(deadline.channel, message)
-            else:
+            elif deadline.remain_day < 0:
                 message = '```{}``` {} 님 작업 마감이 {}일 지났습니다'.format(
                     deadline.work,
                     deadline.worker,
