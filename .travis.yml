@@ -4,6 +4,6 @@ python:
 install: pip install -r deadline_bot/requirements.txt
 script: py.test
 before_install:
-- openssl aes-256-cbc -K $encrypted_e23337679bfd_key -iv $encrypted_e23337679bfd_iv
+- openssl aes-256-cbc -K $encrypted_5ba21af0aaba_key -iv $encrypted_5ba21af0aaba_iv
   -in deadline_bot/google_api_credential.json.enc -out deadline_bot/google_api_credential.json
   -d
