@@ -1,5 +1,10 @@
 language: python
 python:
-    - "3.6"
+- '3.6'
 install: pip install -r deadline_bot/requirements.txt
 script: py.test
+before_install:
+- openssl aes-256-cbc -K $encrypted_7ec42ab5c92a_key -iv $encrypted_7ec42ab5c92a_iv
+  -in google_api_credential.json.enc -out google_api_credential.json -d
+- openssl aes-256-cbc -K $encrypted_7ec42ab5c92a_key -iv $encrypted_7ec42ab5c92a_iv
+  -in .env.enc -out .env -d
