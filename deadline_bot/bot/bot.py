@@ -13,29 +13,28 @@ class Bot:
     def post_message(self, deadlines: List[Deadline]):
         for deadline in deadlines:
             if 0 < deadline.remain_day <= 5:
-                message = '```{}``` {} 님 작업 마감이 {}일 남았습니다'.format(
-                    deadline.work,
-                    deadline.worker,
-                    deadline.remain_day)
-                self.__post_message(deadline.channel, message)
+                self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
             elif deadline.remain_day == 0:
-                message = '```{}``` {} 님 작업 마감일입니다'.format(
-                    deadline.work,
-                    deadline.worker)
-                self.__post_message(deadline.channel, message)
+                self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
             elif deadline.remain_day < 0:
-                message = '```{}``` {} 님 작업 마감이 {}일 지났습니다'.format(
-                    deadline.work,
-                    deadline.worker,
-                    -deadline.remain_day)
-                self.__post_message(deadline.channel, message)
+                self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
 
-    def __post_message(self, channel, message):
+    def __post_message(self, channel, worker, remain_day, work):
         try:
+            message = '{} 님 {} 입니다 : {}'.format(worker, self.__get_remain_day_str(remain_day), work)
+
             full_channel = self.__get_full_channel(channel)
-            self.__slacker.chat.post_message('#' + full_channel, message, as_user=True, link_names=1)
+            self.__slacker.chat.post_message(full_channel, message, as_user=True, link_names=1)
         except Exception as e:
             logger.warn('error: {}, channel: {}, message: {}'.format(e, channel, message))
+
+    def __get_remain_day_str(self, remain_day: int):
+        if remain_day == 0:
+            return 'D-DAY'
+        elif remain_day < 0:
+            return 'D + {}일'.format(-remain_day)
+        else:
+            return 'D - {}일'.format(remain_day)
 
     def __get_full_channel(self, channel):
         if self.__debug is False:
