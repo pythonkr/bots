@@ -12,7 +12,7 @@ class Bot:
 
     def post_message(self, deadlines: List[Deadline]):
         for deadline in deadlines:
-            if 0 < deadline.remain_day <= 5:
+            if 0 < deadline.remain_day <= 1:
                 self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
             elif deadline.remain_day == 0:
                 self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
