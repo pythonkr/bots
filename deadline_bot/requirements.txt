@@ -1,3 +1,4 @@
 google-api-python-client==1.6.1
 python-dotenv==0.6.3
+schedule==0.4.2
 slacker==0.9.30
