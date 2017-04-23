@@ -2,4 +2,5 @@
 .env
 *.pyc
 google_api_credential.json
+lastfailed
 log.log
