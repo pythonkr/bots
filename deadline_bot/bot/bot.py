@@ -1,5 +1,5 @@
 from config import SLACK_BOT_TOKEN
-from datetime import datetime
+from datetime import datetime, timedelta
 from logger import logger
 from sheet.deadline import Deadline
 from slacker import Slacker
@@ -12,6 +12,8 @@ class Bot:
         self.__debug = debug
 
     def post_message(self, deadlines: List[Deadline]):
+        self.__delete_older_messages()
+
         for deadline in deadlines:
             if 0 < deadline.remain_day <= 1:
                 self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
@@ -19,6 +21,21 @@ class Bot:
                 self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
             elif deadline.remain_day < 0:
                 self.__post_message(deadline.channel, deadline.worker, deadline.remain_day, deadline.work)
+
+    def __delete_older_messages(self):
+        bot = self.__slacker.users.get_user_id('kronos')
+
+        result = self.__slacker.channels.list()
+        for channel in result.body['channels']:
+            channel_id = channel['id']
+            yesterday = datetime.today() - timedelta(days=1)
+            history = self.__slacker.channels.history(channel_id, latest=yesterday.timestamp(), count=10)
+            for message in history.body['messages']:
+                if 'user' in message and message['user'] == bot:
+                    try:
+                        self.__slacker.chat.delete(channel_id, message['ts'])
+                    except Exception as e:
+                        logger.warn(e)
 
     def __post_message(self, channel, worker, remain_day, work):
         try:
