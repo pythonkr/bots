@@ -1,6 +1,10 @@
 /.idea
 .env
+.suo
 *.pyc
+deadline_bot.pyproj
+deadline_bot.pyproj.user
+deadline_bot.sln
 google_api_credential.json
 lastfailed
 log.log
